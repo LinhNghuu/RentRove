@@ -1,16 +1,89 @@
+// Load environment variables from .env file
 require('dotenv').config();
+
+// Import necessary modules
 const express = require('express');
-const app = express();
-const port = 3000;
 const cors = require('cors');
+const ListingsDB = require('./modules/listingsDB.js');
+
+// Create an Express application
+const app = express();
+const HTTP_PORT = process.env.PORT || 3000; // Use the port from the environment variable or default to 3000
+
+// Enable Cross-Origin Resource Sharing (CORS) and JSON body parsing for incoming requests
 app.use(cors());
 app.use(express.json());
 
+// Create an instance of the ListingsDB class
+const db = new ListingsDB();
+
+// Initialize database connection and start the server if successful
+db.initialize(process.env.MONGODB_CONN_STRING)
+  .then(() => {
+    app.listen(HTTP_PORT, () => {
+      console.log(`Server listening on: ${HTTP_PORT}`);
+      console.log(`App listening at http://localhost:${HTTP_PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error(err); // Log errors if the database connection fails
+  });
+
+// Route for the root URL
 app.get('/', (req, res) => {
-  res.json({ message: 'API Listening' });
+  res.json({ message: 'Welcome to the Listings API' });
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-  console.log(`App listening at http://localhost:${port}`);
+// Route to add a new listing to the database
+app.post('/api/listings', (req, res) => {
+  db.addNewListing(req.body)
+    .then((listing) => res.status(201).json(listing)) // Respond with 201 status code and the new listing
+    .catch((err) => res.status(500).json({ error: err.message })); // Handle errors
+});
+
+// Route to get all listings with optional paging and name filtering
+app.get('/api/listings', (req, res) => {
+  const { page, perPage, name } = req.query;
+  db.getAllListings(page, perPage, name)
+    .then((listings) => res.json(listings)) // Respond with the array of listings
+    .catch((err) => res.status(500).json({ error: err.message })); // Handle errors
+});
+
+// Route to get a specific listing by its ID
+app.get('/api/listings/:id', (req, res) => {
+  db.getListingById(req.params.id)
+    .then((listing) => {
+      if (listing) {
+        res.json(listing); // Respond with the found listing
+      } else {
+        res.status(404).send('Listing not found'); // Respond with 404 if not found
+      }
+    })
+    .catch((err) => res.status(500).json({ error: err.message })); // Handle errors
+});
+
+// Route to update a specific listing by its ID
+app.put('/api/listings/:id', (req, res) => {
+  db.updateListingById(req.body, req.params.id)
+    .then((result) => {
+      if (result.modifiedCount === 0) {
+        res.status(404).send('Listing not found or data unchanged'); // Respond with 404 if not found or unchanged
+      } else {
+        res.status(204).send(); // Respond with 204 status code for successful update
+      }
+    })
+    .catch((err) => res.status(500).json({ error: err.message })); // Handle errors
+});
+
+// Route to delete a specific listing by its ID
+app.delete('/api/listings/:id', (req, res) => {
+  db.deleteListingById(req.params.id)
+    .then((result) => {
+      if (result.deletedCount === 0) {
+        res.status(404).send('Listing not found'); // Respond with 404 if not found
+      } else {
+        res.status(204).send(); // Respond with 204 status code for successful deletion
+      }
+    })
+    .catch((err) => res.status(500).json({ error: err.message })); // Handle errors
 });
