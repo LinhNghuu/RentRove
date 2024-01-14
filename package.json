@@ -1,0 +1,28 @@
+{
+  "name": "rentrove",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinhNghuu/RentRove.git"
+  },
+  "keywords": [
+    "RentRove"
+  ],
+  "author": "LinhNguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LinhNghuu/RentRove/issues"
+  },
+  "homepage": "https://github.com/LinhNghuu/RentRove#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.4"
+  }
+}
