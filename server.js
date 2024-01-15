@@ -22,7 +22,7 @@ const ListingsDB = require('./modules/listingsDB.js');
 
 // Create an Express application
 const app = express();
-const HTTP_PORT = process.env.PORT || 3000; // Use the port from the environment variable or default to 3000
+const HTTP_PORT = process.env.PORT || 8080;
 
 // Enable Cross-Origin Resource Sharing (CORS) and JSON body parsing for incoming requests
 app.use(cors());
