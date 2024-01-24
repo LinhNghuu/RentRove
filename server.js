@@ -34,7 +34,7 @@ const db = new ListingsDB();
 // Initialize database connection and start the server if successful
 db.initialize(process.env.MONGODB_CONN_STRING)
   .then(() => {
-    app.listen(HTTP_PORT, () => {
+    app.listen(HTTP_PORT, () => { 
       console.log(`Server listening on: ${HTTP_PORT}`);
       console.log(`App listening at http://localhost:${HTTP_PORT}`);
     });
