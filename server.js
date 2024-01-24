@@ -1,16 +1,16 @@
 /********************************************************************************
-* WEB422 – Assignment 1
-*
-* I declare that this assignment is my own work in accordance with Seneca's
-* Academic Integrity Policy:
-*
-* https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
-*
-* Name: Nguyen Huu Linh Student ID: 118197227 Date: Jan 15, 2024
-*
-* Published URL: https://orange-red-giraffe-cape.cyclic.app/
-*
-********************************************************************************/
+ * WEB422 – Assignment 1
+ *
+ * I declare that this assignment is my own work in accordance with Seneca's
+ * Academic Integrity Policy:
+ *
+ * https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
+ *
+ * Name: Nguyen Huu Linh Student ID: 118197227 Date: Jan 15, 2024
+ *
+ * Published URL: https://orange-red-giraffe-cape.cyclic.app/
+ *
+ ********************************************************************************/
 
 // Load environment variables from .env file
 require('dotenv').config();
