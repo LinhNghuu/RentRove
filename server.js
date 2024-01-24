@@ -27,7 +27,7 @@ const HTTP_PORT = process.env.PORT || 8080;
 // Enable Cross-Origin Resource Sharing (CORS) and JSON body parsing for incoming requests
 app.use(cors());
 app.use(express.json());
-
+  
 // Create an instance of the ListingsDB class
 const db = new ListingsDB();
 
