@@ -1,12 +1,12 @@
 /********************************************************************************
- * WEB422 – Assignment 1
+ * WEB422 – Assignment 2
  *
  * I declare that this assignment is my own work in accordance with Seneca's
  * Academic Integrity Policy:
  *
  * https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
  *
- * Name: Nguyen Huu Linh Student ID: 118197227 Date: Jan 15, 2024
+ * Name: Nguyen Huu Linh Student ID: 118197227 Date: Jan 28, 2024
  *
  * Published URL: https://orange-red-giraffe-cape.cyclic.app/
  *
@@ -27,14 +27,15 @@ const HTTP_PORT = process.env.PORT || 8080;
 // Enable Cross-Origin Resource Sharing (CORS) and JSON body parsing for incoming requests
 app.use(cors());
 app.use(express.json());
-  
+// Serve static files located in the root folder
+app.use(express.static(__dirname));
 // Create an instance of the ListingsDB class
 const db = new ListingsDB();
 
 // Initialize database connection and start the server if successful
 db.initialize(process.env.MONGODB_CONN_STRING)
   .then(() => {
-    app.listen(HTTP_PORT, () => {  
+    app.listen(HTTP_PORT, () => {
       console.log(`Server listening on: ${HTTP_PORT}`);
       console.log(`App listening at http://localhost:${HTTP_PORT}`);
     });
@@ -45,7 +46,7 @@ db.initialize(process.env.MONGODB_CONN_STRING)
 
 // Route for the root URL
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to the Listings API' });
+  res.sendFile(__dirname + '/index.html');
 });
 
 // Route to add a new listing to the database

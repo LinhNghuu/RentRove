@@ -1,0 +1,11 @@
+/* ---------Body and Default Styles--------- */
+body {
+    color: #94beb4; 
+    font-family: 'Barlow', sans-serif; /* Default font */
+    margin: 0;
+    padding: 0;
+}
+#listingsTable tbody tr:hover td,
+#listingsTable tbody tr:hover {
+    background-color: #f2f2f2;
+}
